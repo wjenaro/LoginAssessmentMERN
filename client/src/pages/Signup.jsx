@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import axios from 'axios';
+import { GoogleLogin } from '@react-oauth/google'; // Import GoogleLogin component
 
 function Signup() {
   const [email, setEmail] = useState('');
@@ -25,6 +26,25 @@ function Signup() {
     } catch (err) {
       // Handle error
       setError(err.response?.data?.message || 'An error occurred');
+      setSuccess('');
+    }
+  };
+
+  const handleGoogleSuccess = async (response) => {
+    // Handle Google login response here
+    console.log('Google login successful:', response);
+
+    try {
+      // Send token to your backend server for verification and user creation
+      const result = await axios.post('http://localhost:4000/api/auth/google', {
+        id_token: response.credential
+      });
+
+      // Handle the response from your backend server
+      setSuccess('Google login successful');
+      setError('');
+    } catch (err) {
+      setError('Google login failed');
       setSuccess('');
     }
   };
@@ -76,6 +96,17 @@ function Signup() {
                 </div>
                 <button type="submit" className="btn btn-primary w-100">Signup</button>
               </form>
+              <hr />
+              <div className="text-center">
+                <p>Or signup with:</p>
+                <GoogleLogin
+                  onSuccess={handleGoogleSuccess}
+                  onError={(error) => {
+                    console.error('Google login error:', error);
+                    setError('Google login failed');
+                  }}
+                />
+              </div>
             </div>
           </div>
         </div>

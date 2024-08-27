@@ -11,7 +11,7 @@ app.use(cors());// Middleware to handle CORS
 app.use(express.json()); // For parsing application/json
 app.use(express.urlencoded({ extended: true })); // For parsing application/x-www-form-urlencoded
 
-const PORT = process.env.PORT || 3000; // Default to 3000 if PORT is not defined
+const PORT = process.env.PORT || 4000; // Default to 3000 if PORT is not defined
 
 async function connectToDatabase() {
   try {
