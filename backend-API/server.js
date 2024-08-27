@@ -1,11 +1,12 @@
 // server.js
 const express = require('express');
 const mongoose = require('mongoose');
+const cors = require('cors');
 const userRouter = require('./Routers/userAuth');
 require('dotenv').config();
 
 const app = express();
-
+app.use(cors());// Middleware to handle CORS
 // Middleware to parse JSON bodies and URL-encoded data
 app.use(express.json()); // For parsing application/json
 app.use(express.urlencoded({ extended: true })); // For parsing application/x-www-form-urlencoded

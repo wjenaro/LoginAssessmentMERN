@@ -1,6 +1,7 @@
-// controllers/userController.js
+
 const bcrypt = require('bcrypt');
-const User = require('../models/User'); // Ensure the path is correct
+const jwt = require('jsonwebtoken');
+const User = require('../models/User'); 
 
 // Signup controller function
 const signup = async (req, res) => {
@@ -42,6 +43,38 @@ const signup = async (req, res) => {
   }
 };
 
-module.exports = {
-  signup
-};
+// Login controller function
+const login = async (req, res) => {
+    const { email, password } = req.body;
+  
+    try {
+      // Check if the user exists
+      const user = await User.findOne({ email });
+      if (!user) {
+        return res.status(400).json({ message: 'Invalid credentials' });
+      }
+  
+      // Check if the password is correct
+      const isMatch = await bcrypt.compare(password, user.password);
+      if (!isMatch) {
+        return res.status(400).json({ message: 'Invalid credentials' });
+      }
+  
+      // Create and return a JWT
+      const token = jwt.sign(
+        { userId: user._id },
+        process.env.JWT_SECRET,
+        { expiresIn: '1h' }
+      );
+  
+      res.status(200).json({ token, message: 'Login successful' });
+    } catch (err) {
+      console.error(err);
+      res.status(500).json({ message: 'Server error' });
+    }
+  };
+  
+  module.exports = {
+    signup,
+    login
+  };
