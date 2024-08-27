@@ -2,6 +2,10 @@
 
 This project is a full-stack MERN (MongoDB, Express, React, Node.js) application that features user authentication using Google OAuth 2.0. The app allows users to sign up, log in, and access protected routes through traditional signup or Google login.
 
+![image](https://github.com/user-attachments/assets/bf414672-38ee-42bd-8a56-cb3d13605d23)
+![image](https://github.com/user-attachments/assets/cf3b4890-4379-4a29-87cc-4a44b09f0bf9)
+
+
 ## Table of Contents
 
 1. [Project Structure](#project-structure)
@@ -48,53 +52,51 @@ root
 ├── index.html
 ├── README.md
 └── package.json
-### Explanation:
 
-- **backend-API**: Contains all backend-related files, including server configuration, route handling, and database models.
-  - **Passport**: Folder containing Passport.js configuration for Google OAuth.
-  - **Routers**: Contains route definitions for profile management and user authentication.
-  - **.env**: Environment variables specific to the backend.
-  - **server.js**: Main server file that starts the Express server.
 
-- **client**: Contains all frontend-related files.
-  - **src**: The source directory where your React components and other client-side logic reside.
-  - **.env**: Environment variables specific to the client.
-
-- **.gitignore**: Specifies files and directories to be ignored by Git.
-- **.eslint.config.js**: ESLint configuration file for code linting.
-- **index.html**: Entry point for the client application.
-- **README.md**: This documentation file.
-- **package.json**: Contains dependencies and scripts for both backend and frontend.
-## Technologies Used
-
-### Frontend:
-- React
-- Axios (for HTTP requests)
-- Google OAuth SDK
-
-### Backend:
-- Node.js
-- Express
-- MongoDB (via Mongoose)
-- Passport.js (for Google OAuth 2.0)
-
-## Getting Started
-
-### Prerequisites
-
+**#Explanation:**
+backend-API: Contains all backend-related files, including server configuration, route handling, and database models.
+Passport: Folder containing Passport.js configuration for Google OAuth.
+Routers: Contains route definitions for profile management and user authentication.
+.env: Environment variables specific to the backend.
+server.js: Main server file that starts the Express server.
+client: Contains all frontend-related files.
+src: The source directory where your React components and other client-side logic reside.
+.env: Environment variables specific to the client.
+.gitignore: Specifies files and directories to be ignored by Git.
+.eslint.config.js: ESLint configuration file for code linting.
+index.html: Entry point for the client application.
+README.md: This documentation file.
+package.json: Contains dependencies and scripts for both backend and frontend.
+Technologies Used
+Frontend:
+React
+Axios (for HTTP requests)
+Google OAuth SDK
+Backend:
+Node.js
+Express
+MongoDB (via Mongoose)
+Passport.js (for Google OAuth 2.0)
+Getting Started
+Prerequisites
 Ensure you have the following installed on your local machine:
 
-- Node.js (v14.x or higher)
-- npm (v6.x or higher)
-- MongoDB
-
-### Installation
-
+Node.js (v14.x or higher)
+npm (v6.x or higher)
+MongoDB
+Installation
 Clone the repository:
 
-```bash
+bash
+Copy code
 git clone https://github.com/your-username/mern-google-auth-app.git
 cd mern-google-auth-app
+Install dependencies for both backend and client:
+
+
+bash
+Copy code
 # For backend
 cd backend-API
 npm install
@@ -102,8 +104,22 @@ npm install
 # For client
 cd ../client
 npm install
+Environment Variables
+Create a .env file in both the backend-API and client directories with the following variables:
 
-
+Backend .env
+plaintext
+Copy code
+PORT=4000
+MONGOOSE_URL=mongodb://0.0.0.0:27017/MERN
+GOOGLE_CLIENT_ID=your-google-client-id
+GOOGLE_CLIENT_SECRET=your-google-client-secret
+SESSION_SECRET=your-session-secret
+JWT_SECRET=your-jwt-secret
+Client .env
+plaintext
+Copy code
+REACT_APP_GOOGLE_CLIENT_ID=your-google-client-id
 Running the Application
 Start the backend server:
 bash
@@ -162,6 +178,3 @@ Contributions are welcome! Please fork this repository and submit a pull request
 
 License
 This project is licensed under the MIT License. See the LICENSE file for details.
-
-
-You can now copy this Markdown-formatted content into your `README.md` file in your GitHub repository.
