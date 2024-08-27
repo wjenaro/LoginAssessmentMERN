@@ -45,35 +45,47 @@ const signup = async (req, res) => {
 
 // Login controller function
 const login = async (req, res) => {
-    const { email, password } = req.body;
-  
-    try {
-      // Check if the user exists
-      const user = await User.findOne({ email });
-      if (!user) {
-        return res.status(400).json({ message: 'Invalid credentials' });
-      }
-  
-      // Check if the password is correct
-      const isMatch = await bcrypt.compare(password, user.password);
-      if (!isMatch) {
-        return res.status(400).json({ message: 'Invalid credentials' });
-      }
-  
-      // Create and return a JWT
-      const token = jwt.sign(
-        { userId: user._id },
-        process.env.JWT_SECRET,
-        { expiresIn: '1h' }
-      );
-  
-      res.status(200).json({ token, message: 'Login successful' });
-    } catch (err) {
-      console.error(err);
-      res.status(500).json({ message: 'Server error' });
+  const { email, password } = req.body;
+
+  try {
+    // Check if the user exists
+    const user = await User.findOne({ email });
+    if (!user) {
+      return res.status(400).json({ message: 'Invalid credentials' });
     }
-  };
-  
+
+    // Check if the password is correct
+    const isMatch = await bcrypt.compare(password, user.password);
+    if (!isMatch) {
+      return res.status(400).json({ message: 'Invalid credentials' });
+    }
+
+    // Create a JWT
+    const token = jwt.sign(
+      { userId: user._id },
+      process.env.JWT_SECRET,
+      { expiresIn: '1h' }
+    );
+
+    // Set the token in a cookie
+    res.cookie('token', token, {
+      httpOnly: true, // Prevent JavaScript access to the cookie
+      secure: process.env.NODE_ENV === 'production', // Use secure cookies in production
+      maxAge: 3600000 // 1 hour
+    });
+
+    // Send the token and username
+    res.status(200).json({
+      token,
+      username: user.username, // Include username in the response
+      message: 'Login successful'
+    });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: 'Server error' });
+  }
+};
+
   module.exports = {
     signup,
     login
